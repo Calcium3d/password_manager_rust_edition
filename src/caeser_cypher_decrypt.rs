@@ -1,16 +1,23 @@
-use rand::Rng;
+fn caeser_decrypt(encrypted_text: &str) -> String{
 
-pub fn caeser_encrypt(unencrypted_text: &str) -> String {
-    let key: u32 = rand::thread_rng().gen_range(1, 95);
+	let encrypted_text: Vec<char> = encrypted_text.chars().collect();
 
-    let mut result: String = "".to_owned();
+    let mut index_2: usize = encrypted_text.len() - 2;
 
-    let unencrypted_text: Vec<char> = unencrypted_text.chars().collect();
+    let mut key: u32 = 0;
+    if encrypted_text[index_2] == '1' || encrypted_text[index_2] == '2' || encrypted_text[index_2] == '3' || encrypted_text[index_2] == '4' || encrypted_text[index_2] == '5' || encrypted_text[index_2] == '6' || encrypted_text[index_2] == '7' || encrypted_text[index_2] == '8' || encrypted_text[index_2] == '9' {
+        key = (encrypted_text[index_2] as u32 * 10) + (encrypted_text[index_2 + 1] as u32); 
+    }
+    else {
+        key = encrypted_text[index_2 + 1]as u32;
+    }
 
     let mut alphabet: u32 = 0;
 
-    for c in unencrypted_text {
-        if c == 'a' {
+	let mut result: String = "".to_owned();
+
+	for c in encrypted_text {
+		if c == 'a' {
             alphabet = 1;
         }
 
@@ -390,10 +397,10 @@ pub fn caeser_encrypt(unencrypted_text: &str) -> String {
             result.push_str(" ");
         }
 
-        alphabet = alphabet + key;
+        alphabet = alphabet - key;
 
-        if alphabet > 94 {
-            alphabet = alphabet - 94;
+        if alphabet < 0 {
+            alphabet = alphabet + 94;
         }
 
         if alphabet == 1 {
@@ -781,4 +788,7 @@ pub fn caeser_encrypt(unencrypted_text: &str) -> String {
     result.push_str(key_str);
 
     result
+	
+    
+
 }
