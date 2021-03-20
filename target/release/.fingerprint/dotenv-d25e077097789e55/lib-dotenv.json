@@ -1,0 +1,1 @@
+{"rustc":17138091804324965747,"features":"[]","target":17059278414123449765,"profile":4339006351771724982,"path":16291641759665233162,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"release/.fingerprint/dotenv-d25e077097789e55/dep-lib-dotenv"}}],"rustflags":["-C","link-arg=-undefined","-C","link-arg=dynamic_lookup"],"metadata":16072336696222889242,"config":0}

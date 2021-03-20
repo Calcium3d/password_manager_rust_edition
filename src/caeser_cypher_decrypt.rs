@@ -1,8 +1,8 @@
 pub fn caeser_decrypt(encrypted: &str) -> String{
 
-	let mut encrypted_text: Vec<char> = encrypted.chars().collect();
+	let encrypted_text: Vec<char> = encrypted.chars().collect();
 
-    let mut index_2: usize = encrypted_text.len() - 1;
+    let index_2: usize = encrypted_text.len() - 1;
 
     let mut key: u32 = 0;
     if encrypted_text[index_2] == '1' || encrypted_text[index_2] == '2' || encrypted_text[index_2] == '3' || encrypted_text[index_2] == '4' || encrypted_text[index_2] == '5' || encrypted_text[index_2] == '6' || encrypted_text[index_2] == '7' || encrypted_text[index_2] == '8' || encrypted_text[index_2] == '9' {

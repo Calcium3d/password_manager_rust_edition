@@ -28,7 +28,7 @@ pub fn password(length: i32, caps: bool, numbers: bool, symbols: bool) -> String
 
     let length_of_string: i32 = string1.chars().count() as i32;
 
-    for i in 0..length.to_string().len() {
+    for _i in 0..length.to_string().len() {
         let letter: usize = rand::thread_rng().gen_range(0, length_of_string) as usize;
         let letter1: String = things[letter].to_string();
         password.push_str(&letter1[..]);
