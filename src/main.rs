@@ -168,16 +168,66 @@ fn main() -> Result<()> {
                     let username = &username[..];
 
                     //inputting the password
-                    println!("Enter the password you want for this website: ");
-                    let password: usize = std::io::stdin().read_line(&mut line).unwrap();
-                    let password: String = caeser_encrypt(password.to_string());
-                    let password = &password[..];
+                    println!("Do you want to be assigned a password? (y/n) {{default is n}}");
+                    let choice: usize = std::io::stdin().read_line(&mut line).unwrap();
+                    let choice: String = choice.to_string();
+                    let choice: &str = &choice[..];
 
-                    
+                    let password = if choice == "y" {
+                        println!("Generating password");
 
-                        conn.execute(
-                            "INSERT INTO password (website, username, password)",
-                            params![website, username, password],
+                        //getting the length
+                        println!("What's the length of the password");
+                        let length: usize = std::io::stdin().read_line(&mut line).unwrap();
+                        let length: String = length.to_string();
+                        let length: &str = &length[..];
+
+                        //getting the capitalisation
+                        println!("Do you want capitalisation in the password? (y/n) {{default = n}}");
+                        let cap: usize = std::io::stdin().read_line(&mut line).unwrap();
+                        let cap: String = cap.to_string();
+                        let cap: &str = &cap[..];
+
+                        let caps = if cap == "y" {
+                            true
+                        } else {
+                            false
+                        };
+
+
+                        //getting teh numbers
+                        println!("Do you want numbers in the password? (y/n) {{default is n}}");
+                        let num: usize = std::io::stdin().read_line(&mut line).unwrap();
+                        let num: String = num.to_string();
+                        let num: &str = &num[..];
+
+                        let numbers = if num == "y" {
+                            true
+                        } else {
+                            false
+                        };
+
+                        //getting the symbols
+                        println!("Do you want symbols in the password? (y/n) {{default is n}}");
+                        let symbol: usize = std::io::stdin().read_line(&mut line).unwrap();
+                        let symbol: String = symbol.to_string();
+                        let symbol: &str = &symbol[..];
+
+                        let symbols = if symbol == "y" {
+                            true
+                        } else {
+                            false
+                        };
+                    } else {
+                        println!("Enter the password you want for this website: ");
+                        let password: usize = std::io::stdin().read_line(&mut line).unwrap();
+                        let password: String = caeser_encrypt(password.to_string());
+                        let password = &password[..];
+                    };
+
+                    conn.execute(
+                        "INSERT INTO password (website, username, password)",
+                        params![website, username, password],
                         )?;
                     }
 
