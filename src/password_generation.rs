@@ -1,6 +1,6 @@
 use rand::Rng;
 
-pub fn password(length: i32, caps: bool, numbers: bool, symbols: bool) -> String{
+pub fn password_generate(length: i32, caps: bool, numbers: bool, symbols: bool) -> String{
     let mut password: String = "".to_owned();
     let mut string: String = "".to_owned();
     let alphabet: &str = "abcdefghijklmnopqrstuvwxyz";

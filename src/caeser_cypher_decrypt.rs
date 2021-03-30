@@ -1,18 +1,18 @@
-pub fn caeser_decrypt(encrypted: &str) -> String{
+pub fn caeser_decrypt(encrypted: String) -> String{
 
 	let encrypted_text: Vec<char> = encrypted.chars().collect();
 
     let index_2: usize = encrypted_text.len() - 1;
 
-    let mut key: u32 = 0;
+    let mut key: i32 = 0;
     if encrypted_text[index_2] == '1' || encrypted_text[index_2] == '2' || encrypted_text[index_2] == '3' || encrypted_text[index_2] == '4' || encrypted_text[index_2] == '5' || encrypted_text[index_2] == '6' || encrypted_text[index_2] == '7' || encrypted_text[index_2] == '8' || encrypted_text[index_2] == '9' {
-        key = (encrypted_text[index_2] as u32 * 10) + (encrypted_text[index_2 + 1] as u32); 
+        key = (encrypted_text[index_2] as i32 * 10) + (encrypted_text[index_2 + 1] as i32); 
     }
     else {
-        key = encrypted_text[index_2 + 1]as u32;
+        key = encrypted_text[index_2 + 1]as i32;
     }
 
-    let mut alphabet: u32 = 0;
+    let mut alphabet: i32 = 0;
 
 	let mut result: String = "".to_owned();
 
@@ -398,7 +398,7 @@ pub fn caeser_decrypt(encrypted: &str) -> String{
         }
 
         alphabet = alphabet - key;
-
+        
         if alphabet < 0 {
             alphabet = alphabet + 94;
         }

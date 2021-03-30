@@ -1,6 +1,6 @@
 use rand::Rng;
 
-pub fn caeser_encrypt(unencrypted_text: &str) -> String {
+pub fn caeser_encrypt(unencrypted_text: String) -> String {
     let key: u32 = rand::thread_rng().gen_range(1, 95);
 
     let mut result: String = "".to_owned();

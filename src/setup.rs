@@ -36,6 +36,7 @@ pub fn setup() -> Result<()> {
         "CREATE TABLE passwords (
             id INTEGER PRIMARY KEY,
             website TEXT NOT NULL,
+            username TEXT NOT NULL,
             passwords TEXT NOT NULL
         )",
         NO_PARAMS
