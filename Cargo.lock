@@ -127,7 +127,7 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 
 [[package]]
 name = "password_manager_rust"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "rand",
  "rusqlite",

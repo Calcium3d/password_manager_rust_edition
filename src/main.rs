@@ -26,10 +26,6 @@ struct Password {
     password: String
 }
 
-struct ID {
-    id: i32
-}
-
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
 

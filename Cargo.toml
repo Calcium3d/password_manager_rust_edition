@@ -1,6 +1,6 @@
 [package]
 name = "password_manager_rust"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Blue Chalk <thebluechalk@gmail.com>"]
 edition = "2018"
 
