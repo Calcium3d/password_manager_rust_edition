@@ -1,14 +1,17 @@
 use rand::Rng;
 
 pub fn caeser_encrypt(unencrypted_text: String) -> String {
+    //generating a key
     let key: u32 = rand::thread_rng().gen_range(1, 95);
 
     let mut result: String = "".to_owned();
 
+    //converting to a vector
     let unencrypted_text: Vec<char> = unencrypted_text.chars().collect();
 
     let mut alphabet: u32 = 0;
 
+    //converting the alphabets into numbers
     for c in unencrypted_text {
         if c == 'a' {
             alphabet = 1;
@@ -390,12 +393,16 @@ pub fn caeser_encrypt(unencrypted_text: String) -> String {
             result.push_str(" ");
         }
 
+        //displacing with key
         alphabet = alphabet + key;
 
+
+        //correcting value incase of discrepency
         if alphabet > 94 {
             alphabet = alphabet - 94;
         }
 
+        //converting the numbers back into alphabets
         if alphabet == 1 {
             result.push_str("a");
         }
@@ -774,11 +781,13 @@ pub fn caeser_encrypt(unencrypted_text: String) -> String {
 
     }   
 
+    //adding a key to the encryption
     let key_string = key.to_string();
 
     let key_str: &str = &key_string[..];
 
     result.push_str(key_str);
 
+    //return the result
     result
 }

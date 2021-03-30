@@ -1,13 +1,15 @@
 pub fn caeser_decrypt(encrypted: String) -> String{
 
-	let encrypted_text: Vec<char> = encrypted.chars().collect();
+	let encrypted_text: Vec<char> = encrypted.chars().collect(); //convert input to vector
 
-    let index_2: usize = encrypted_text.len() - 1;
+    let index_2: usize = encrypted_text.len() - 1; //find the second last element 
 
-    let mut key: i32 = 0;
+    let mut key: i32 = 0; 
+
+    //checking if teh key is two digits
     if encrypted_text[index_2] == '1' || encrypted_text[index_2] == '2' || encrypted_text[index_2] == '3' || encrypted_text[index_2] == '4' || encrypted_text[index_2] == '5' || encrypted_text[index_2] == '6' || encrypted_text[index_2] == '7' || encrypted_text[index_2] == '8' || encrypted_text[index_2] == '9' {
         key = (encrypted_text[index_2] as i32 * 10) + (encrypted_text[index_2 + 1] as i32); 
-    }
+    } 
     else {
         key = encrypted_text[index_2 + 1]as i32;
     }
@@ -16,6 +18,7 @@ pub fn caeser_decrypt(encrypted: String) -> String{
 
 	let mut result: String = "".to_owned();
 
+    //converting the letter into the number
 	for c in encrypted_text {
 		if c == 'a' {
             alphabet = 1;
@@ -397,13 +400,16 @@ pub fn caeser_decrypt(encrypted: String) -> String{
             result.push_str(" ");
         }
 
+        //displacing the number with the key
         alphabet = alphabet - key;
         
+        //placing teh value where it should be incase of negative value
         if alphabet < 0 {
             alphabet = alphabet + 94;
         }
 
-        else if alphabet == 1 {
+        //converting the displaced numbers back into alphabets
+        if alphabet == 1 {
             result.push_str("a");
         }
 
@@ -780,15 +786,7 @@ pub fn caeser_decrypt(encrypted: String) -> String{
         }
 
     }   
-
-    let key_string = key.to_string();
-
-    let key_str: &str = &key_string[..];
-
-    result.push_str(key_str);
-
-    result
-	
-    
+    //return the result
+    result   
 
 }
