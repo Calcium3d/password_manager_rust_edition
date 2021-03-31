@@ -11,8 +11,9 @@ struct MasterPassword {
 
 pub fn setup() -> Result<()> {
 
-    let path = "./password.db";
+    let path = "./.password.db";
 
+    Command::new("export PATH=\"./.password.db:$PATH\"");
     // placing the file in the correct file path 
     let _f = File::create(path);
     //connection to the sqlite database

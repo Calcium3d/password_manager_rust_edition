@@ -39,7 +39,7 @@ fn main() -> Result<()> {
 
     else {
         //reading teh correct path on an os
-        let path = "./password.db";
+        let path = "./.password.db";
     
         let conn = Connection::open(path)?; //opening a connection
     
