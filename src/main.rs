@@ -26,6 +26,10 @@ struct Password {
     password: String
 }
 
+struct ID {
+    id: i32
+}
+
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
 
@@ -153,15 +157,13 @@ fn main() -> Result<()> {
                 else if input == "ADD" {
                     //inputting the website name
                     println!("Enter the website you want (no url, just the name): ");
-                    let website: usize = std::io::stdin().read_line(&mut line).unwrap();
-                    let website: String = caeser_encrypt(website.to_string());
-                    let website = &website[..];
+                    let websites: usize = std::io::stdin().read_line(&mut line).unwrap();
+                    let websites: String = caeser_encrypt(websites.to_string());
 
                     //inputting the username
                     println!("Enter the username: ");
                     let username: usize = std::io::stdin().read_line(&mut line).unwrap();
                     let username: String = caeser_encrypt(username.to_string());
-                    let username = &username[..];
 
                     //inputting the password
                     println!("Do you want to be assigned a password? (y/n) {{default is n}}");
@@ -176,7 +178,7 @@ fn main() -> Result<()> {
                         println!("What's the length of the password");
                         let length: usize = std::io::stdin().read_line(&mut line).unwrap();
                         let length: String = length.to_string();
-                        let length: &str = &length[..];
+                        let length: i32 = length.parse::<i32>().unwrap();
 
                         //getting the capitalisation
                         println!("Do you want capitalisation in the password? (y/n) {{default = n}}");
@@ -214,17 +216,48 @@ fn main() -> Result<()> {
                         } else {
                             false
                         };
+
+                        password_generate(length, caps, numbers, symbols)
                     } else {
                         println!("Enter the password you want for this website: ");
                         let password: usize = std::io::stdin().read_line(&mut line).unwrap();
                         let password: String = caeser_encrypt(password.to_string());
-                        let password = &password[..];
+                        password
+                    };
+
+                    let mut stmt = conn.prepare("SELECT id FROM passwords ORDER BY _id  DESC LIMIT 1")?;
+
+                    let id_iter = stmt.query_map(params![], |row| {
+                        Ok(ID {
+                            id: row.get(0)?
+                        })
+                    })?;
+
+                    let mut like_id_pls: ID = ID {
+                        id: 0
+                    };
+
+                    let mut id_dont_know_any_more_names_for_this: ID = ID {
+                        id: 0
+                    };
+
+                    for like_this_id_name in id_iter {
+                        id_dont_know_any_more_names_for_this = like_this_id_name.unwrap();
+                    }
+
+                    let entry: Password = Password {
+                        id: id_dont_know_any_more_names_for_this.id,
+                        website: websites, 
+                        username: username,
+                        password: password
                     };
 
                     conn.execute(
-                        "INSERT INTO password (website, username, password)",
-                        params![website, username, password],
+                        "INSERT INTO passwords (website, username, password)",
+                        params![entry.website, entry.username, entry.password],
                         )?;
+
+                   
                     }
 
                 else if input == "HELP" {
