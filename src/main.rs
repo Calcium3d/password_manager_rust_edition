@@ -1,18 +1,17 @@
-mod caeser_cypher_encrypt;
-mod caeser_cypher_decrypt;
-mod password_generation;
 mod setup;
+mod password_generation;
 
-pub use crate::caeser_cypher_decrypt::caeser_decrypt;
-pub use crate::password_generation::password_generate;
-pub use crate::caeser_cypher_encrypt::caeser_encrypt;
 pub use crate::setup::setup;
+pub use crate::password_generation::password_generate;
+
+extern crate base64;
 
 use sha2::{Sha256, Digest};
 use std::env;
 use std::process::Command;
 use rusqlite::{Connection, Result, params};
 use rusqlite::NO_PARAMS;
+use base64::{encode, decode};
 
 struct MasterPassword {
     id: i32, 
@@ -135,11 +134,11 @@ pub fn add(path: &str) -> Result<()> {
 
     //inputting the website name
     println!("Enter the website you want (no url, just the name): ");
-    let websites: String = caeser_encrypt(input_to_string());
+    let websites: String = encode(input_to_string());
 
     //inputting the username
     println!("Enter the username: ");
-    let username: String = caeser_encrypt(input_to_string());
+    let username: String = encode(input_to_string());
 
     //inputting the password
     println!("Do you want to be assigned a password? (y/n) {{default is n}}");
@@ -191,7 +190,7 @@ pub fn add(path: &str) -> Result<()> {
         password_generate(length, caps, numbers, symbols)
     } else {
         println!("Enter the password you want for this website: ");
-        let password: String = caeser_encrypt(input_to_string());
+        let password: String = encode(input_to_string());
         password
     };
 
@@ -255,11 +254,11 @@ pub fn all(path: &str) -> Result<()>{
                     for pass in password_iter {
                         check = pass.unwrap();
 
-                        let website = caeser_decrypt(check.website);
-                        let username = caeser_decrypt(check.username);
-                        let password = caeser_decrypt(check.password);
+                        let website = decode(check.website).unwrap();
+                        let username = decode(check.username).unwrap();
+                        let password = decode(check.password).unwrap();
 
-                        println!("For {},\n Username: {},\n Password: {}", website, username, password); //displaying the info
+                        println!("For {:?},\n Username: {:?},\n Password: {:?}", website, username, password); //displaying the info
                     }
     Ok(())
 }
@@ -291,11 +290,11 @@ pub fn site(path: &str) -> Result<()> {
 
                     for pass in password_iter {
                         check = pass.unwrap();
-                        let website = caeser_decrypt(check.website);
-                        let username = caeser_decrypt(check.username);
-                        let password = caeser_decrypt(check.password);
+                        let website = decode(check.website).unwrap();
+                        let username = decode(check.username).unwrap();
+                        let password = decode(check.password).unwrap();
 
-                        println!("For {},\n Username: {},\n Password: {}", website, username, password); //displaying the info
+                        println!("For {:?},\n Username: {:?},\n Password: {:?}", website, username, password); //displaying the info
                     }
     Ok(())
 }
