@@ -2,6 +2,7 @@ use std::process::Command;
 use rusqlite::{Connection, Result, params};
 use rusqlite::NO_PARAMS;
 use sha2::{Sha256, Digest};
+use std::fs::File;
 
 struct MasterPassword {
     id: i32, 
@@ -10,19 +11,10 @@ struct MasterPassword {
 
 pub fn setup() -> Result<()> {
 
-    // placing the file in the correct file path both on windows and linux
-    let path = if cfg!(unix) { 
-        Command::new("touch ~/.password.db")
-                    .spawn()
-                    .expect("failed to create database");
-        "~/.password.db"
-    } else { 
-        Command::new("touch CSIDL_PROGRAM_FILES_COMMON/.password.db")
-                    .spawn()
-                    .expect("Failed to create database");
-        "CSIDL_PROGRAM_FILES_COMMON/.password.db" 
-    };
+    let path = "./password.db";
 
+    // placing the file in the correct file path 
+    let _f = File::create(path);
     //connection to the sqlite database
     let conn = Connection::open(path)?;
 

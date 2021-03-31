@@ -39,11 +39,7 @@ fn main() -> Result<()> {
 
     else {
         //reading teh correct path on an os
-        let path = if cfg!(unix) {
-            "~/.password.db"
-        } else {
-            "CSIDL_PROGRAM_FILES_COMMON/.password.db" 
-        };
+        let path = "./password.db";
     
         let conn = Connection::open(path)?; //opening a connection
     
